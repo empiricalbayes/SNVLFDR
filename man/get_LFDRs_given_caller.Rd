@@ -30,5 +30,5 @@ output=get_LFDRs_given_caller(bam_input=bam_path,calls=calls_path,LFDR.T=0.01,er
 
 }
 \references{
-Karimnezhad, A., Palidwor, G.A., Thavorn, K. et al. Accuracy and reproducibility of somatic point mutation calling in clinical-type targeted sequencing data. BMC Med Genomics 13, 156 (2020). https://doi.org/10.1186/s12920-020-00803-z
+Karimnezhad, A. and Perkins, T.J. (2023). Empirical Bayes Single Nucleotide Variant Calling For Next-Generation Sequencing Data. Working Paper. <https://mysite.science.uottawa.ca/akarimne/wp-content/uploads/2023/12/AK-TJP-SR.pdf>
 }

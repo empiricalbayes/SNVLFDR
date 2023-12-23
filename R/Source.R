@@ -31,7 +31,7 @@
 #' Slot \strong{updated_bam} adds estimated LFDRs, model errors and a mutant variable (indicating whether each site is detected to be a mutant (1) or non-mutant (0) site) to the input file.
 #'@import stats
 #'@import utils
-#'@references Karimnezhad, A., Palidwor, G.A., Thavorn, K. et al. Accuracy and reproducibility of somatic point mutation calling in clinical-type targeted sequencing data. BMC Med Genomics 13, 156 (2020). https://doi.org/10.1186/s12920-020-00803-z
+#'@references Karimnezhad, A. and Perkins, T.J. (2023). Empirical Bayes Single Nucleotide Variant Calling For Next-Generation Sequencing Data. Working Paper. <https://mysite.science.uottawa.ca/akarimne/wp-content/uploads/2023/12/AK-TJP-SR.pdf>
 #'
 #' @export
 get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,error,method,epsilon){
@@ -403,7 +403,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
 #' @param error Error rate between 0 and 1. If it is set to NULL, a weighted average of average base call quality and average mapping quality per site will be calculated. Otherwise, it may be set to 0.01 or a desired error vector can be introduced by the user.
 #' @return A list. Slot \strong{estimated.LFDRs} returns estimated LFDRs for all sites in the input file.
 #' Slot \strong{updated_bam} adds estimated LFDRs, model errors and a mutant variable (indicating whether each site is detected to be a mutant (1) or non-mutant (0) site) to the input file.
-#'@references Karimnezhad, A., Palidwor, G.A., Thavorn, K. et al. Accuracy and reproducibility of somatic point mutation calling in clinical-type targeted sequencing data. BMC Med Genomics 13, 156 (2020). https://doi.org/10.1186/s12920-020-00803-z
+#'@references Karimnezhad, A. and Perkins, T.J. (2023). Empirical Bayes Single Nucleotide Variant Calling For Next-Generation Sequencing Data. Working Paper. <https://mysite.science.uottawa.ca/akarimne/wp-content/uploads/2023/12/AK-TJP-SR.pdf>
 #'
 #' @export
 get_LFDRs_given_caller<-function(bam_input,calls,LFDR.T,error){
