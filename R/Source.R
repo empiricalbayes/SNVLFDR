@@ -307,7 +307,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     LFDRs=L2.empirical
     Mutant=ifelse(LFDRs>LFDR.T,0,1)
     output=cbind(x.filtered,LFDRs,Mutant)
-    return(list('estimated.pi0'=pi0.empirical,'estimated.LFDRs'=LFDRs,'output'=output))
+    return(list('estimated.pi0'=pi0.empirical,'estimated.LFDRs'=LFDRs,'updated_bam'=output))
   } else if (method=='uniform_empirical'){
     theta.initial.uniform =stats::runif(1000,0,1)
     f1.uniform<-get.f1(x =x.filtered ,theta =theta.initial.uniform,what.error = error )
@@ -346,7 +346,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     LFDRs=L2.uniform
     Mutant=ifelse(LFDRs>LFDR.T,0,1)
     output=cbind(x.filtered,LFDRs,Mutant)
-    return(list('estimated.pi0'=pi0.uniform,'estimated.LFDRs'=LFDRs,'output'=output))
+    return(list('estimated.pi0'=pi0.uniform,'estimated.LFDRs'=LFDRs,'updated_bam'=output))
   } else if (method=='uniform'){
     theta.initial.uniform =stats::runif(1000,0,1)
     f1.uniform<-get.f1(x =x.filtered ,theta =theta.initial.uniform,what.error = error )
