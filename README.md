@@ -21,7 +21,18 @@ library(SNVLFDR)
 
 ## How to run SNVLFDR to call variants on an example data.
 ```r
-bam_input <- system.file("extdata", "bam_input.csv", package="SNVLFDR")bedfile <- system.file("extdata", "regions.bed", package="SNVLFDR")BQ.T=20MQ.T=20pi0.initial=0.95AF.T=0.01DP.T=10LFDR.T=0.01error=NULLmethod='empirical'epsilon=0.01output=get_LFDRs(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,error,method,epsilon)
+bam_input <- system.file("extdata", "bam_input.csv", package="SNVLFDR")
+bedfile <- system.file("extdata", "regions.bed", package="SNVLFDR")
+BQ.T=20
+MQ.T=20
+pi0.initial=0.95
+AF.T=0.01
+DP.T=10
+LFDR.T=0.01
+error=NULL
+method='empirical'
+epsilon=0.01
+output=get_LFDRs(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,error,method,epsilon)
 
 #Estimated LFDRs
 output$estimated.LFDRs
@@ -29,9 +40,14 @@ output$estimated.LFDRs
 #Estimated proportion on non-mutant sites
 output$estimated.pi0
 
+#Updated Bam
+output$updated_bam
+
+
 ## How to run SNVLFDR to prioritize variants called by another variant caller
 bam_path <- system.file("extdata", "bam_input.csv", package="SNVLFDR")
-calls_path <- system.file("extdata", "calls.vcf", package="SNVLFDR")output=get_LFDRs_given_caller(bam_input=bam_path,calls=calls_path,LFDR.T=0.01,error=NULL)
+calls_path <- system.file("extdata", "calls.vcf", package="SNVLFDR")
+output=get_LFDRs_given_caller(bam_input=bam_path,calls=calls_path,LFDR.T=0.01,error=NULL)
 
 #Estimated LFDRs
 output$estimated.LFDRs
