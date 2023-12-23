@@ -40,7 +40,7 @@ output$estimated.LFDRs
 #Estimated proportion on non-mutant sites
 output$estimated.pi0
 
-#Updated Bam
+#Filtered Bam matrix that includes estimated LFDRs
 output$filtered.bam
 
 
@@ -49,7 +49,7 @@ bam_path <- system.file("extdata", "bam_input.csv", package="SNVLFDR")
 calls_path <- system.file("extdata", "calls.vcf", package="SNVLFDR")
 output=get_LFDRs_given_caller(bam_input=bam_path,calls=calls_path,LFDR.T=0.01,error=NULL)
 
-#Estimated LFDRs
+#Updated VCF file that includes estimated LFDRs
 output$updated.vcf
 
 
