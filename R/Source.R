@@ -27,7 +27,7 @@
 #' @param error Error rate between 0 and 1. If it is set to NULL, a weighted average of average base call quality and average mapping quality per site will be calculated. Otherwise, it may be set to 0.01 or a desired error vector can be introduced by the user.
 #' @param method Method used to estimate pi0 and LFDRs. It can be "empirical", "uniform_empirical" or "uniform". If no method is specified, it will be set to "empirical" by default (recommended).
 #' @param epsilon The difference between old and new estimates of pi0 used for convergence. If no value is specified, it will be set to 0.01 by default.
-#' @return A list. Slot \strong{estimated.pi0} returns estimated proportion of non-mutant sites. Slot \strong{estimated.LFDRs} returns estimated LFDRs per genomic site.
+#' @return A list. Slot \strong{estimated.pi0} returns estimated proportion of non-mutant sites. Slot \strong{estimated.LFDRs} returns estimated LFDRs for genomic sites that were not filtered out.
 #' Slot \strong{updated_bam} adds estimated LFDRs, model errors and a mutant variable (indicating whether each site is detected to be a mutant (1) or non-mutant (0) site) to the input file.
 #'@import stats
 #'@import utils
@@ -256,7 +256,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     x.filtered<-x[w,]
     w0<-dim(x)[1]-length(w)
   } else {
-    warning('With the current AF.T or DP.T values all sites have to be included. The function ignored these thresholds. If this is not satisfactory, you may consider other values.')
+    warning('With the current AF.T and/or DP.T thresholds no site was filtered out. If this is not satisfactory, consider changing the thresholds.')
     x.filtered<-x
     w0=0
   }

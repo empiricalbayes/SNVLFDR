@@ -42,7 +42,7 @@ get_LFDRs(
 \item{epsilon}{The difference between old and new estimates of pi0 used for convergence. If no value is specified, it will be set to 0.01 by default.}
 }
 \value{
-A list. Slot \strong{estimated.pi0} returns estimated proportion of non-mutant sites. Slot \strong{estimated.LFDRs} returns estimated LFDRs per genomic site.
+A list. Slot \strong{estimated.pi0} returns estimated proportion of non-mutant sites. Slot \strong{estimated.LFDRs} returns estimated LFDRs for genomic sites that were not filtered out.
 Slot \strong{updated_bam} adds estimated LFDRs, model errors and a mutant variable (indicating whether each site is detected to be a mutant (1) or non-mutant (0) site) to the input file.
 }
 \description{
