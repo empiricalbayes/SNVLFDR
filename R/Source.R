@@ -254,11 +254,12 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
   w<-which(as.numeric(as.character(x$AF))>=AF.T & as.numeric(as.character(x$Depth))>=DP.T)
   if (length(w)>0){
     x.filtered<-x[w,]
+    w0<-dim(x)[1]-length(w)
   } else {
     warning('With the current AF.T or DP.T values all sites have to be included. The function ignored these thresholds. If this is not satisfactory, you may consider other values.')
     x.filtered<-x
+    w0=0
   }
-  w0<-dim(x)[1]-length(w)
   R<-as.numeric(as.character(x.filtered$Ct.Ref))
   M<-as.numeric(as.character(x.filtered$Ct.Alt))
   X1<-as.numeric(as.character(x.filtered$Ct.Alt1))
@@ -277,22 +278,18 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     O.LFDRs.empirical[is.na(O.LFDRs.empirical)]<-0
     Q.empirical=cbind(Q,O.LFDRs.empirical)
     w_l.empirical=which(colnames(Q.empirical)=='O.LFDRs.empirical')
-    N.Mutatons.empirical.all<-pi0.empirical.all<-pi0.empirical.manipulated.all<-LFDR.empirical.all<-c()
+    N.Mutatons.empirical.all<-pi0.empirical.all<-LFDR.empirical.all<-c()
     Q0.empirical<-Q.empirical
     pi0.empirical.1=2
     pi0.empirical<-c(pi0.empirical.1,pi0.initial)
     d_pi0.empirical<-length(pi0.empirical)
     dQ0.empirical<-dim(Q0.empirical)[1]
     N.Mutatons.empirical<-sum(Q0.empirical[, w_l.empirical]<LFDR.T)
-    pi0.empirical.manipulated<-c(pi0.empirical.1,pi0.initial)
-    dQ0.empirical.manipulated<-dim(x)[1]
     message("empirical estimation of g(.)")
     i=0
     while(abs(pi0.empirical[d_pi0.empirical]-pi0.empirical[d_pi0.empirical-1])>epsilon){
-      pi0.empirical.2=sum(Q0.empirical[,w_l.empirical+i]>LFDR.T,na.rm = T)/dQ0.empirical
+      pi0.empirical.2=(sum(Q0.empirical[,w_l.empirical+i]>LFDR.T,na.rm = T)+w0)/(dQ0.empirical+w0)
       pi0.empirical<-c(pi0.empirical,pi0.empirical.2)
-      pi0.empirical.manipulated.2=(sum(Q0.empirical[,w_l.empirical+i]>LFDR.T,na.rm = T)+w0)/dQ0.empirical.manipulated
-      pi0.empirical.manipulated<-c(pi0.empirical.manipulated,pi0.empirical.manipulated.2)
       d_pi0.empirical<-length(pi0.empirical)
       Qs.empirical<-Q0.empirical[Q0.empirical[,w_l.empirical+i]<=LFDR.T,]
       theta.empirical.1=as.numeric(as.character(Qs.empirical$AF))
@@ -318,24 +315,19 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     O.LFDRs.uniform[is.na(O.LFDRs.uniform)]<-0
     Q.uniform=cbind(Q,O.LFDRs.uniform)
     w_l.uniform=which(colnames(Q.uniform)=='O.LFDRs.uniform')
-    N.Mutatons.uniform.all<-pi0.uniform.all<-pi0.uniform.manipulated.all<-LFDR.uniform.all<-c()
+    N.Mutatons.uniform.all<-pi0.uniform.all<-LFDR.uniform.all<-c()
     Q0.uniform<-Q.uniform
     pi0.uniform.1=2
     pi0.uniform<-c(pi0.uniform.1,pi0.initial)
     d_pi0.uniform<-length(pi0.uniform)
     dQ0.uniform<-dim(Q0.uniform)[1]
     N.Mutatons.uniform<-sum(Q0.uniform[, w_l.uniform]<LFDR.T)
-    pi0.uniform.manipulated<-c(pi0.uniform.1,pi0.initial)
-    dQ0.uniform.manipulated<-dim(x)[1]
 
     message("uniform and then empirical estimation of g(.)")
     j=0
     while(abs(pi0.uniform[d_pi0.uniform]-pi0.uniform[d_pi0.uniform-1])>epsilon){
-      pi0.uniform.2=(sum(Q0.uniform[,w_l.uniform+j]>LFDR.T,na.rm = T))/dQ0.uniform
+      pi0.uniform.2=(sum(Q0.uniform[,w_l.uniform+j]>LFDR.T,na.rm = T)+w0)/(dQ0.uniform+w0)
       pi0.uniform<-c(pi0.uniform,pi0.uniform.2)
-
-      pi0.uniform.manipulated.2=(sum(Q0.uniform[,w_l.uniform+j]>LFDR.T,na.rm = T)+w0)/dQ0.uniform.manipulated
-      pi0.uniform.manipulated<-c(pi0.uniform.manipulated,pi0.uniform.manipulated.2)
 
       d_pi0.uniform<-length(pi0.uniform)
       Qs.uniform<-Q0.uniform[Q0.uniform[,w_l.uniform+j]<=LFDR.T,]
@@ -362,7 +354,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     O.LFDRs.uniform.nonconvergent[is.na(O.LFDRs.uniform.nonconvergent)]<-0
     Q.uniform.nonconvergent=cbind(Q,O.LFDRs.uniform.nonconvergent)
     w_l.uniform.nonconvergent=which(colnames(Q.uniform.nonconvergent)=='O.LFDRs.uniform.nonconvergent')
-    N.Mutatons.uniform.nonconvergent.all<-pi0.uniform.nonconvergent.manipulated.all<-pi0.uniform.nonconvergent.all<-LFDR.uniform.nonconvergent.all<-c()
+    N.Mutatons.uniform.nonconvergent.all<-pi0.uniform.nonconvergent.all<-LFDR.uniform.nonconvergent.all<-c()
     Q0.uniform.nonconvergent<-cbind(Q,O.LFDRs.uniform.nonconvergent)
 
     pi0.uniform.nonconvergent.1=2
@@ -370,15 +362,11 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     d_pi0.uniform.nonconvergent<-length(pi0.uniform.nonconvergent)
     dQ0.uniform.nonconvergent<-dim(Q0.uniform.nonconvergent)[1]
     N.Mutatons.uniform.nonconvergent<-sum(Q0.uniform.nonconvergent[, w_l.uniform.nonconvergent]<LFDR.T)
-    pi0.uniform.nonconvergent.manipulated<-c(pi0.uniform.nonconvergent.1,pi0.initial)
-    dQ0.uniform.nonconvergent.manipulated<-dim(x)[1]
     message("uniform estimation of g(.)")
     l=0
     while(abs(pi0.uniform.nonconvergent[d_pi0.uniform.nonconvergent]-pi0.uniform.nonconvergent[d_pi0.uniform.nonconvergent-1])>epsilon){
-      pi0.uniform.nonconvergent.2=(sum(Q0.uniform.nonconvergent[,w_l.uniform.nonconvergent+l]>LFDR.T,na.rm = T))/dQ0.uniform.nonconvergent
+      pi0.uniform.nonconvergent.2=(sum(Q0.uniform.nonconvergent[,w_l.uniform.nonconvergent+l]>LFDR.T,na.rm = T)+w0)/(dQ0.uniform.nonconvergent+w0)
       pi0.uniform.nonconvergent<-c(pi0.uniform.nonconvergent,pi0.uniform.nonconvergent.2)
-      pi0.uniform.nonconvergent.manipulated.2=(sum(Q0.uniform.nonconvergent[,w_l.uniform.nonconvergent+l]>LFDR.T,na.rm = T)+w0)/dQ0.uniform.nonconvergent.manipulated
-      pi0.uniform.nonconvergent.manipulated<-c(pi0.uniform.nonconvergent.manipulated,pi0.uniform.nonconvergent.manipulated.2)
 
       d_pi0.uniform.nonconvergent<-length(pi0.uniform.nonconvergent)
       Qs.uniform.nonconvergent<-Q0.uniform.nonconvergent[Q0.uniform.nonconvergent[,w_l.uniform.nonconvergent+l]<=LFDR.T,]
