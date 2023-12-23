@@ -406,7 +406,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
 #' @param LFDR.T A number between 0 and 1. It can be set to 0 to include all sites. Otherwise, this threshold excludes sites with an LFDR below the specified threshold.  If no value is specified, it will be set to 0.01 by default.
 #' @param error Error rate between 0 and 1. If it is set to NULL, a weighted average of average base call quality and average mapping quality per site will be calculated. Otherwise, it may be set to 0.01 or a desired error vector can be introduced by the user.
 #' @return A list. Slot \strong{estimated.LFDRs} returns estimated LFDRs for all sites in the input file.
-#' Slot \strong{updated.bam} adds estimated LFDRs, model errors and a mutant variable (indicating whether each site is detected to be a mutant (1) or non-mutant (0) site) to the input bam file.
+#' Slot \strong{updated.vcf} outputs estimated LFDRs, model errors and a mutant variable (indicating whether each site is detected to be a mutant (1) or non-mutant (0) site) for those variants already detected by a desired variant caller.
 #'@references Karimnezhad, A. and Perkins, T.J. (2023). Empirical Bayes Single Nucleotide Variant Calling For Next-Generation Sequencing Data. Working Paper. <https://mysite.science.uottawa.ca/akarimne/wp-content/uploads/2023/12/AK-TJP-SR.pdf>
 #'
 #' @export
@@ -415,13 +415,6 @@ get_LFDRs_given_caller<-function(bam_input,calls,LFDR.T,error){
 
   A=utils::read.csv(bam_input,sep="\t",quote = "\"",header=F,stringsAsFactors = F)
   colnames(A)[1:2]=c('CHR','POS')
-  #A[1:2,1:5]
-  #A=A[sample(1:dim(A)[1],1000),]
-  #utils::write.csv(A[-1,],file ="/Users/alikarimnezhad/Documents/Bioinformatics-OHRI/Scientific Reports/Package/bam_input_e.csv",row.names = F)
-  #CC=read.csv(file ="/Users/alikarimnezhad/Documents/Bioinformatics-OHRI/Scientific Reports/Package/bam_input_e.csv")
-  #colnames(CC)[1:2]=c('CHR','POS')
-  #A=CC
-  #A[1:2,1:5]
   B=utils::read.table(calls,fill = T)
   colnames(B)[1:2]=c('CHR','POS')
   A0=NULL
@@ -609,6 +602,6 @@ get_LFDRs_given_caller<-function(bam_input,calls,LFDR.T,error){
   LFDRs<-(pi0*f0)/(pi0*f0+(1-pi0)*f1)
   Mutant=ifelse(LFDRs>LFDR.T,0,1)
   output=cbind(x.filtered,LFDRs,Mutant)
-  return(list('estimated.LFDRs'=LFDRs,'updated.bam'=output))
+  return(list('estimated.LFDRs'=LFDRs,'updated.vcf'=output))
 }
 

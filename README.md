@@ -50,8 +50,7 @@ calls_path <- system.file("extdata", "calls.vcf", package="SNVLFDR")
 output=get_LFDRs_given_caller(bam_input=bam_path,calls=calls_path,LFDR.T=0.01,error=NULL)
 
 #Estimated LFDRs
-output$estimated.LFDRs
-
+output$updated.vcf
 
 
 ```
