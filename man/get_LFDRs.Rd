@@ -43,7 +43,7 @@ get_LFDRs(
 }
 \value{
 A list. Slot \strong{estimated.pi0} returns estimated proportion of non-mutant sites. Slot \strong{estimated.LFDRs} returns estimated LFDRs for genomic sites that were not filtered out.
-Slot \strong{updated_bam} adds estimated LFDRs, model errors and a mutant variable (indicating whether each site is detected to be a mutant (1) or non-mutant (0) site) to the input file.
+Slot \strong{filtered_bam} adds estimated LFDRs, model errors and a mutant variable (indicating whether each site is detected to be a mutant (1) or non-mutant (0) site) to the filtered input file .
 }
 \description{
 Based on a given read count matrix, identifies single nucleotide variants (SNVs) by estimating local false discovery rates (LFDRs). Users can set an initial value for the proportion of non-mutant sites and specify thresholds for allele frequency, read depth and LFDR cut-off value.
