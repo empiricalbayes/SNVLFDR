@@ -415,6 +415,13 @@ get_LFDRs_given_caller<-function(bam_input,calls,LFDR.T,error){
 
   A=utils::read.csv(bam_input,sep="\t",quote = "\"",header=F,stringsAsFactors = F)
   colnames(A)[1:2]=c('CHR','POS')
+  #A[1:2,1:5]
+  #A=A[sample(1:dim(A)[1],1000),]
+  #utils::write.csv(A[-1,],file ="/Users/alikarimnezhad/Documents/Bioinformatics-OHRI/Scientific Reports/Package/bam_input_e.csv",row.names = F)
+  #CC=read.csv(file ="/Users/alikarimnezhad/Documents/Bioinformatics-OHRI/Scientific Reports/Package/bam_input_e.csv")
+  #colnames(CC)[1:2]=c('CHR','POS')
+  #A=CC
+  #A[1:2,1:5]
   B=utils::read.table(calls,fill = T)
   colnames(B)[1:2]=c('CHR','POS')
   A0=NULL
