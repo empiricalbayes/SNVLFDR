@@ -260,7 +260,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     x.filtered<-x
     w0=0
   }
-  message(paste0("The input bam file has ",dim(A)[1]," sites. However, ",print(dim(A)[1]-dim(x.filtered)[1])," sites were excluded due to the pre-specfied thresholds and/or the intervals specifed in the bam file"))
+  message(paste("The input bam file has ",dim(A)[1]," sites. However, ",dim(A)[1]-dim(x.filtered)[1]," sites were excluded due to the pre-specfied thresholds and/or the intervals specifed in the bam file",sep=''))
   R<-as.numeric(as.character(x.filtered$Ct.Ref))
   M<-as.numeric(as.character(x.filtered$Ct.Alt))
   X1<-as.numeric(as.character(x.filtered$Ct.Alt1))
