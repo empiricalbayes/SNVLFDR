@@ -28,7 +28,7 @@
 #' @param method Method used to estimate pi0 and LFDRs. It can be "empirical", "uniform_empirical" or "uniform". If no method is specified, it will be set to "empirical" by default (recommended).
 #' @param epsilon The difference between old and new estimates of pi0 used for convergence. If no value is specified, it will be set to 0.01 by default.
 #' @return A list. Slot \strong{estimated.pi0} returns estimated proportion of non-mutant sites. Slot \strong{estimated.LFDRs} returns estimated LFDRs for genomic sites that were not filtered out.
-#' Slot \strong{filtered_bam} adds estimated LFDRs, model errors and a mutant variable (indicating whether each site is detected to be a mutant (1) or non-mutant (0) site) to the filtered input file .
+#' Slot \strong{filtered.bam} adds estimated LFDRs, model errors and a mutant variable (indicating whether each site is detected to be a mutant (1) or non-mutant (0) site) to the filtered input file .
 #'@import stats
 #'@import utils
 #'@references Karimnezhad, A. and Perkins, T.J. (2023). Empirical Bayes Single Nucleotide Variant Calling For Next-Generation Sequencing Data. Working Paper. <https://mysite.science.uottawa.ca/akarimne/wp-content/uploads/2023/12/AK-TJP-SR.pdf>
