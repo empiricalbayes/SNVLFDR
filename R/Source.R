@@ -406,7 +406,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
 #' @param LFDR.T A number between 0 and 1. It can be set to 0 to include all sites. Otherwise, this threshold excludes sites with an LFDR below the specified threshold.  If no value is specified, it will be set to 0.01 by default.
 #' @param error Error rate between 0 and 1. If it is set to NULL, a weighted average of average base call quality and average mapping quality per site will be calculated. Otherwise, it may be set to 0.01 or a desired error vector can be introduced by the user.
 #' @return A list. Slot \strong{estimated.LFDRs} returns estimated LFDRs for all sites in the input file.
-#' Slot \strong{filtered.bam} adds estimated LFDRs, model errors and a mutant variable (indicating whether each site is detected to be a mutant (1) or non-mutant (0) site) to the filtered input file.
+#' Slot \strong{updated.bam} adds estimated LFDRs, model errors and a mutant variable (indicating whether each site is detected to be a mutant (1) or non-mutant (0) site) to the input bam file.
 #'@references Karimnezhad, A. and Perkins, T.J. (2023). Empirical Bayes Single Nucleotide Variant Calling For Next-Generation Sequencing Data. Working Paper. <https://mysite.science.uottawa.ca/akarimne/wp-content/uploads/2023/12/AK-TJP-SR.pdf>
 #'
 #' @export
@@ -602,6 +602,6 @@ get_LFDRs_given_caller<-function(bam_input,calls,LFDR.T,error){
   LFDRs<-(pi0*f0)/(pi0*f0+(1-pi0)*f1)
   Mutant=ifelse(LFDRs>LFDR.T,0,1)
   output=cbind(x.filtered,LFDRs,Mutant)
-  return(list('estimated.LFDRs'=LFDRs,'filtered.bam'=output))
+  return(list('estimated.LFDRs'=LFDRs,'updated.bam'=output))
 }
 

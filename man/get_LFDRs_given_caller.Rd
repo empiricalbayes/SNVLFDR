@@ -17,7 +17,7 @@ get_LFDRs_given_caller(bam_input, calls, LFDR.T, error)
 }
 \value{
 A list. Slot \strong{estimated.LFDRs} returns estimated LFDRs for all sites in the input file.
-Slot \strong{filtered.bam} adds estimated LFDRs, model errors and a mutant variable (indicating whether each site is detected to be a mutant (1) or non-mutant (0) site) to the filtered input file.
+Slot \strong{updated.bam} adds estimated LFDRs, model errors and a mutant variable (indicating whether each site is detected to be a mutant (1) or non-mutant (0) site) to the input bam file.
 }
 \description{
 Based on a given read count matrix and a list of calls made by a desired variant caller, estimates LFDRs that corresponds to each genomic site. It further

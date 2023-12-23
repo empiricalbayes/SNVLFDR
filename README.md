@@ -41,7 +41,7 @@ output$estimated.LFDRs
 output$estimated.pi0
 
 #Updated Bam
-output$updated_bam
+output$filtered.bam
 
 
 ## How to run SNVLFDR to prioritize variants called by another variant caller
