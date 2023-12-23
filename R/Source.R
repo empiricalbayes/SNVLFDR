@@ -43,6 +43,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
   if (is.null(method)){epsilon=0.01}
   if (is.null(BQ.T)){epsilon=20}
   if (is.null(MQ.T)){epsilon=20}
+  A<-utils::read.csv(bam_input,sep="\t",quote = "\"",header=F,stringsAsFactors = F)
   Prepare_LFDR_input<-function(Input){
     index<-c()
     Allele1<-Ct1<-Ave.Map.Q1<-Ave.Base.Q1<-Ct.Plus.Str.1<-Ct.Mns.Str.1<-c()
@@ -166,8 +167,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     dim(x.e)
     return(x.e)
   }
-  filter_input<-function(bam_input,bedfile,BQ.T,MQ.T){
-    A<-utils::read.csv(bam_input,sep="\t",quote = "\"",header=F,stringsAsFactors = F)
+  filter_input<-function(A,bedfile,BQ.T,MQ.T){
     A<-A[A$V2!="",]
     ave_b_q_alt=BQ.T
     ave_b_q_ref=BQ.T
@@ -231,7 +231,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     f0.all<-sapply(1:dim(x)[1], function(j) {stats::dmultinom(x[j,], size = NULL, prob=probs_0[j,], log = FALSE)})
     return(f0.all)
   }
-  x<-filter_input(bam_input,bedfile,BQ.T,MQ.T)
+  x<-filter_input(A,bedfile,BQ.T,MQ.T)
   if (is.null(error)){
     M_BQ1=as.numeric(as.character(x$Ave.Base.Q.Alt))
     M_BQ2=as.numeric(as.character(x$Ave.Map.Q.Alt))
