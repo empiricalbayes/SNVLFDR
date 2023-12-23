@@ -256,10 +256,11 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     x.filtered<-x[w,]
     w0<-dim(x)[1]-length(w)
   } else {
-    warning('With the current AF.T and/or DP.T thresholds no site was filtered out. If this is not satisfactory, consider changing the thresholds.')
+    #warning('With the current AF.T and/or DP.T thresholds no site was filtered out. If this is not satisfactory, consider changing the thresholds.')
     x.filtered<-x
     w0=0
   }
+  message(paste0("The input bam file has ",dim(A)[1]," sites. However, ",print(dim(A)[1]-dim(x.filtered)[1])," sites were excluded due to the pre-specfied thresholds and/or the intervals specifed in the bam file"))
   R<-as.numeric(as.character(x.filtered$Ct.Ref))
   M<-as.numeric(as.character(x.filtered$Ct.Alt))
   X1<-as.numeric(as.character(x.filtered$Ct.Alt1))
@@ -288,7 +289,8 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     message("empirical estimation of g(.)")
     i=0
     while(abs(pi0.empirical[d_pi0.empirical]-pi0.empirical[d_pi0.empirical-1])>epsilon){
-      pi0.empirical.2=(sum(Q0.empirical[,w_l.empirical+i]>LFDR.T,na.rm = T)+w0)/(dQ0.empirical+w0)
+     #pi0.empirical.2=(sum(Q0.empirical[,w_l.empirical+i]>LFDR.T,na.rm = T)+w0)/(dQ0.empirical+w0)
+      pi0.empirical.2=(sum(Q0.empirical[,w_l.empirical+i]>LFDR.T,na.rm = T))/(dQ0.empirical)
       pi0.empirical<-c(pi0.empirical,pi0.empirical.2)
       d_pi0.empirical<-length(pi0.empirical)
       Qs.empirical<-Q0.empirical[Q0.empirical[,w_l.empirical+i]<=LFDR.T,]
@@ -326,7 +328,8 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     message("uniform and then empirical estimation of g(.)")
     j=0
     while(abs(pi0.uniform[d_pi0.uniform]-pi0.uniform[d_pi0.uniform-1])>epsilon){
-      pi0.uniform.2=(sum(Q0.uniform[,w_l.uniform+j]>LFDR.T,na.rm = T)+w0)/(dQ0.uniform+w0)
+    #pi0.uniform.2=(sum(Q0.uniform[,w_l.uniform+j]>LFDR.T,na.rm = T)+w0)/(dQ0.uniform+w0)
+      pi0.uniform.2=(sum(Q0.uniform[,w_l.uniform+j]>LFDR.T,na.rm = T))/(dQ0.uniform)
       pi0.uniform<-c(pi0.uniform,pi0.uniform.2)
 
       d_pi0.uniform<-length(pi0.uniform)
@@ -365,7 +368,8 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     message("uniform estimation of g(.)")
     l=0
     while(abs(pi0.uniform.nonconvergent[d_pi0.uniform.nonconvergent]-pi0.uniform.nonconvergent[d_pi0.uniform.nonconvergent-1])>epsilon){
-      pi0.uniform.nonconvergent.2=(sum(Q0.uniform.nonconvergent[,w_l.uniform.nonconvergent+l]>LFDR.T,na.rm = T)+w0)/(dQ0.uniform.nonconvergent+w0)
+     #pi0.uniform.nonconvergent.2=(sum(Q0.uniform.nonconvergent[,w_l.uniform.nonconvergent+l]>LFDR.T,na.rm = T)+w0)/(dQ0.uniform.nonconvergent+w0)
+      pi0.uniform.nonconvergent.2=(sum(Q0.uniform.nonconvergent[,w_l.uniform.nonconvergent+l]>LFDR.T,na.rm = T))/(dQ0.uniform.nonconvergent)
       pi0.uniform.nonconvergent<-c(pi0.uniform.nonconvergent,pi0.uniform.nonconvergent.2)
 
       d_pi0.uniform.nonconvergent<-length(pi0.uniform.nonconvergent)
