@@ -255,7 +255,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
   if (length(w)>0){
     x.filtered<-x[w,]
   } else {
-    warning('With the current AF.T or DP.T values all sites have to be excluded. The function ignored these thresholds. If this is not satisfactory, you may consider other values.')
+    warning('With the current AF.T or DP.T values all sites have to be included. The function ignored these thresholds. If this is not satisfactory, you may consider other values.')
     x.filtered<-x
   }
   w0<-dim(x)[1]-length(w)
@@ -306,7 +306,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     }
     message(paste0("converged at iteration: ",i))
     N.Mutatons=utils::tail(N.Mutatons.empirical,n=1)
-    pi0.empirical=utils::tail(pi0.empirical.manipulated,n=1)
+    pi0.empirical=utils::tail(pi0.empirical,n=1)
     LFDRs=L2.empirical
     Mutant=ifelse(LFDRs>LFDR.T,0,1)
     output=cbind(x.filtered,LFDRs,Mutant)
@@ -350,7 +350,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     }
     message(paste0("converged at iteration: ",j))
     N.Mutatons=utils::tail(N.Mutatons.uniform,n=1)
-    pi0.uniform=utils::tail(pi0.uniform.manipulated,n=1)
+    pi0.uniform=utils::tail(pi0.uniform,n=1)
     LFDRs=L2.uniform
     Mutant=ifelse(LFDRs>LFDR.T,0,1)
     output=cbind(x.filtered,LFDRs,Mutant)
@@ -391,7 +391,7 @@ get_LFDRs<-function(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,err
     }
     message(paste0("converged at iteration: ",l))
     N.Mutatons=utils::tail(N.Mutatons.uniform.nonconvergent,n=1)
-    pi0.uniform.nonconvergent=utils::tail(pi0.uniform.nonconvergent.manipulated,n=1)
+    pi0.uniform.nonconvergent=utils::tail(pi0.uniform.nonconvergent,n=1)
     LFDRs=L2.uniform.nonconvergent
     Mutant=ifelse(LFDRs>LFDR.T,0,1)
     output=cbind(x.filtered,LFDRs,Mutant)
