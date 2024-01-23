@@ -64,4 +64,4 @@ output=get_LFDRs(bam_input,bedfile,BQ.T,MQ.T,pi0.initial,AF.T,DP.T,LFDR.T,error,
 
 }
 \references{
-Karimnezhad, A. and Perkins, T.J. (2024). Empirical Bayes single nucleotide variant calling for next-generation sequencing data. Scientific Reports 14,  1550, <https://doi.org/10.1038/s41598-024-51958-z>}
+Karimnezhad, A. and Perkins, T.J. (2024). Empirical Bayes single nucleotide variant calling for next-generation sequencing data. Scientific Reports 14,  1550, <doi:10.1038/s41598-024-51958-z>}
