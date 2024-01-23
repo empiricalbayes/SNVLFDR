@@ -2,7 +2,7 @@
 Empirical Bayes Single Nucleotide Variant Calling for Next Generation Sequencing Data
  
  ### LFDR-based Variant Calling 
- Identifies single nucleotide variants in next-generation sequencing data by estimating their local false discovery rates. For more details, see <https://mysite.science.uottawa.ca/akarimne/wp-content/uploads/2023/12/AK-TJP-SR.pdf>.
+ Identifies single nucleotide variants in next-generation sequencing data by estimating their local false discovery rates. For more details, see <https://doi.org/10.1038/s41598-024-51958-z>.
 
 
 ## Installation
